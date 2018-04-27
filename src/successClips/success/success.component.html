@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row py-2">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="../../assets/img/paso1_no.png">
+                    <img src="../../assets/img/paso2_no.png">
+                    <img src="../../assets/img/paso3_si.png">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-2 text-left">
+        <h2>Felicitaciones su solicitud ha sido admitida</h2>
+    </div>
+
+    <p>
+        Para iniciar el financiamiento necesitamos verificar tu dirección e ingresos económicos para lo cual necesitamos que adjuntes
+        la siguiente información:
+    </p>
+
+    <ul>
+        <li>
+            Una copia legible en ambas caras de tu documento de indentidad
+        </li>
+        <li>
+            Una copia legible de la última factura de cualquiero servicio público (agua, luz, gas, cable, teléfono, etc).
+        </li>
+        <li>
+            Una copia legible de tu última boleta de pago para dependientes o recibos por honorarios para independientes que sustenten
+            tus ingresos mensuales.
+        </li>
+    </ul>
+    <hr>
+    <input type="file" (change)="onFileUpload($event)" accept="*" />
+    <hr>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <ngx-datatable class="material colored-header sm table-hover padding-table" [loadingIndicator]="loadingIndicator" [rows]="uploadFileList"
+                [rowHeight]="35" [headerHeight]="35" [footerHeight]="35" [columns]="columns" [scrollbarV]="verticalScrollbar"
+                [columnMode]="'force'">
+            </ngx-datatable>
+            <ng-template #actionsTemplate let-row="row">
+                <a href="javascript:;" container="body" data-toggle="tooltip" title="Delete" (click)="onDelete(row)">
+                    <i class="fa fa-trash fa-lg"></i>
+                </a>
+            </ng-template>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-3"></div>
+        <div class="col-md-4 mb-3">
+            <button type="button" class="btn btn-primary btn-lg btn-block" (click)="registerFiles()">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i> Registrar</button>
+        </div>
+    </div>
+</div>

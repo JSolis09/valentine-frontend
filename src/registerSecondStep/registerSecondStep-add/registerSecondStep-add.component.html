@@ -1,0 +1,199 @@
+<div class="container">
+    <div class="row py-2">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="../../assets/img/paso1_no.png">
+                    <img src="../../assets/img/paso2_si.png">
+                    <img src="../../assets/img/paso3_no.png">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-2 text-left">
+        <h2>Registro de Solicitud de Crédito</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form [formGroup]="registerSecondStepForm">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="Pais">País de residencia (*)</label>
+                            <select id="Pais" class="form-control input-sm" #pais formControlName="pais" (change)="paisChange(pais.value)">
+                                <option *ngFor="let pais of paisCombo" [value]="pais.Ubigeo_ID">{{pais.Nombre}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="Direccion">Dirección (*)</label>
+                            <input id="Direccion" type="text" class="form-control input-sm" maxlength="255" formControlName="direccionSolicitante" />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <p style="background-color: beige">
+                                Su solicitud se encuentra precalificada. Continúe con el registro.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="Departamento">Departamento (*)</label>
+                            <select id="Departamento" class="form-control input-sm" #departamento formControlName="departamento" (change)="departamentoChange(departamento.value)">
+                                <option *ngFor="let departamento of departamentoCombo" [value]="departamento.Ubigeo_ID">{{departamento.Nombre}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="Provincia">Provincia (*)</label>
+                            <select id="Provincia" class="form-control input-sm" #provincia formControlName="provincia" (change)="provinciaChange(provincia.value)">
+                                <option *ngFor="let provincia of provinciaCombo" [value]="provincia.Ubigeo_ID">{{provincia.Nombre}}</option>
+                            </select>
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="Distrito">Distrito (*)</label>
+                            <select id="Distrito" class="form-control input-sm" formControlName="distrito">
+                                <option *ngFor="let distrito of distritoCombo" [value]="distrito.Ubigeo_ID">{{distrito.Nombre}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="MontoSolicitado">Monto Solicitado (*)</label>
+                            <input id="MontoSolicitado" type="number" min="1" max="1000000" step="1" maxlength="7" class="form-control input-sm" formControlName="montoSolicitado"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="PlazoPrestamo">Plazo del Préstamo (*)</label>
+                            <select id="PlazoPrestamo" class="form-control input-sm" #plazoPrestamo formControlName="plazoPrestamo">
+                                <option value="12">12</option>
+                                <option value="18">18</option>
+                                <option value="24">24</option>
+                                <option value="36">36</option>
+                                <option value="48">48</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="SeguroDegravamen">Seguro Degravamen (*)</label>
+                            <select class="form-control input-sm" id="Seguro" formControlName="seguroDesgravamen">
+                                <option *ngFor="let seguro of seguroCombo" [ngValue]="seguro.ID">
+                                    {{seguro.Nombre}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label for="MotivoPrestamo">Detalle el motivo del préstamo (*)</label>
+                            <textarea id="MotivoPrestamo" rows="4" class="form-control input-sm" maxlength="255" formControlName="detalleMotivo"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="EstadoCivil">Estado Civil (*)</label>
+                            <select id="EstadoCivil" class="form-control input-sm" #estadoCivil formControlName="estadoCivil" (change)="estadoCivilChange(estadoCivil.value)">
+                                <option *ngFor="let estadoCivil of estadoCivilCombo" [ngValue]="estadoCivil.ID">{{estadoCivil.Nombre}}</option>
+                            </select>
+                        </div>                        
+                    </div>
+                    <div *ngIf="casado">
+                        <b>Datos de tu Pareja</b>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="NombresPareja">Nombres (*)</label>
+                                    <input id="NombresPareja" type="text" class="form-control input-sm" maxlength="255" formControlName="nombresConyuge" (keypress)="_keyPressText($event)"
+                                    />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="ApellidoPaternoPareja">Apellido Paterno (*)</label>
+                                    <input id="ApellidoPaternoPareja" type="text" class="form-control input-sm" maxlength="255" formControlName="apellidoPaternoConyuge"
+                                        (keypress)="_keyPressText($event)" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="ApellidoMaternoPareja">Apellido Materno (*)</label>
+                                    <input id="ApellidoMaternoPareja" type="text" class="form-control input-sm" maxlength="255" formControlName="apellidoMaternoConyuge"
+                                        (keypress)="_keyPressText($event)" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="TipoDocumentoPareja">Tipo Documento (*)</label>
+                                    <select id="TipoDocumentoPareja" class="form-control input-sm" formControlName="tipoDocumentoConyuge">
+                                        <option *ngFor="let tipoDocumento of tipoDocumentoCombo" [ngValue]="tipoDocumento.ID">{{tipoDocumento.Nombre}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="NumeroDocumentoPareja">Numero Documento (*)</label>
+                                    <input id="NumeroDocumentoPareja" type="text" class="form-control input-sm" maxlength="11" formControlName="numeroDocConyuge"
+                                        (keypress)="_keyPressNumber($event)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <b>¿Como Generas Ingresos?</b>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="TipoActividad">Tipo de Actividad (*)</label>
+                            <select id="TipoActividad" class="form-control input-sm" formControlName="tipoActividad">
+                                <option *ngFor="let tipoActividad of tipoActividadCombo" [ngValue]="tipoActividad.ID">{{tipoActividad.Nombre}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="RubroActividad">Rubro de Actividad (*)</label>
+                            <select id="RubroActividad" class="form-control input-sm" formControlName="rubroActividad">
+                                <option *ngFor="let rubroActividad of rubroActividadCombo" [ngValue]="rubroActividad.ID">{{rubroActividad.Nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="LugarTrabajo">Lugar de Trabajo (*)</label>
+                            <input id="LugarTrabajo" type="text" class="form-control input-sm" maxlength="255" formControlName="lugarTrabajo" />
+                        </div>
+                    </div>
+                    <b>Necesitamos los datos de tu cuenta</b>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="TipoCuenta">Tipo de Cuenta (*)</label>
+                            <select id="TipoCuenta" class="form-control input-sm" formControlName="tipoCuenta">
+                                <option *ngFor="let tipoCuenta of tipoCuentaCombo" [ngValue]="tipoCuenta.ID">{{tipoCuenta.Nombre}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="NombreBanco">Nombre del Banco (*)</label>
+                            <select id="NombreBanco" class="form-control input-sm" formControlName="banco">
+                                <option *ngFor="let nombreBanco of nombreBancoCombo" [ngValue]="nombreBanco.ID">{{nombreBanco.Nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="CCI">Cod. Interbancario de la cuenta (Sin Guiones) (*)</label>
+                            <input id="CCI" type="text" class="form-control input-sm" maxlength="20" formControlName="cuentaInterbancaria" (keypress)="_keyPressNumber($event)"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="PEP">¿Es una persona expuesta políticamente (PEP) o familiar de una PEP? (*)</label>
+                            <input id="PEP" type="checkbox" class="form-control input-sm" formControlName="esPEP" (change)="onCheckedPEP($event)" />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="PosicionOcupa">Posición de ocupa (* Sólo si marcó el check)</label>
+                            <input id="PosicionOcupa" type="text" class="form-control input-sm" maxlength="255" formControlName="cargoPEP" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3"></div>
+                        <div class="col-md-4 mb-3">
+                            <button type="button" class="btn btn-primary btn-lg btn-block" (click)="registerSecondStep()">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Siguiente</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

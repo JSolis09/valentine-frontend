@@ -1,0 +1,120 @@
+<div class="container">
+    <div class="row py-2">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="../../assets/img/paso1_si.png">
+                    <img src="../../assets/img/paso2_no.png">
+                    <img src="../../assets/img/paso3_no.png">
+                </div>
+            </div>
+        </div>
+        <div class="py-2 text-left">
+            <h2>Registro de Solicitud de Crédito</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <form [formGroup]="registerFirstStepForm">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="Nombres">Nombres (*)</label>
+                            <input type="text" class="form-control" id="Nombres" maxlength="255" formControlName="nombreSolicitante" (keypress)="_keyPressText($event)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="ApellidoPaterno">Apellido Paterno (*)</label>
+                            <input type="text" class="form-control" id="ApellidoPaterno" maxlength="255" formControlName="apellidoParternoSolicitante"
+                                (keypress)="_keyPressText($event)">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="ApellidoMaterno">Apellido Materno (*)</label>
+                            <input type="text" class="form-control" id="ApellidoMaterno" maxlength="255" formControlName="apellidoMaternoSolicitante"
+                                (keypress)="_keyPressText($event)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="FechaNacimiento">Fecha de Nacimiento (*)</label>
+                            <my-date-picker id="FechaNacimiento" [options]="myDatePickerOptions" formControlName="fechaNacimiento"></my-date-picker>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="TipoDocumento">Tipo de Documento (*)</label>
+                            <select id="TipoDocumento" class="form-control input-sm" formControlName="tipoDocumento">
+                                <option *ngFor="let tipoDocumento of tipoDocumentoCombo" [ngValue]="tipoDocumento.ID">
+                                    {{tipoDocumento.Nombre}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label for="NumeroDocumento">Num. Documento (*)</label>
+                            <input type="text" class="form-control input-sm" maxlength="11" id="NumeroDocumento" formControlName="numeroDocumento" (keypress)="_keyPressNumber($event)"
+                            />
+                        </div>
+                        <div class="col-md-2 mb-1">
+                            <label for="DigitoVerificacion">Díg. Verif. (*)</label>
+                            <input type="text" id="DigitoVerificacion" class="form-control input-sm" maxlength="1" formControlName="digitoVerificacion"
+                                (keypress)="_keyPressNumber($event)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="Sexo">Sexo (*)</label>
+                            <select class="form-control input-sm" id="Sexo" formControlName="genero">
+                                <option *ngFor="let sexo of sexoCombo" [ngValue]="sexo.ID">
+                                    {{sexo.Nombre}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="CorreoElectronico">Correo Electrónico (*)</label>
+                            <input type="email" class="form-control" id="CorreoElectronico" maxlength="255" formControlName="correoElectronico"> (Ejemplo: correo@gmail.com)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="NumerodeCelular">Número de Celular (*)</label>
+                            <input type="text" class="form-control" id="NumerodeCelular" maxlength="9" formControlName="numeroCelular" (keypress)="_keyPressNumber($event)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="IngresoMensual">Ingreso Mensual (*)</label>
+                            <input type="number" min="1" max="1000000" step="1" class="form-control" id="IngresoMensual" maxlength="255" formControlName="ingresosMensuales">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="GradoInstruccion">Grado de Instrucción (*)</label>
+                            <select class="form-control input-sm" id="GradoInstruccion" formControlName="gradoInstruccion">
+                                <option *ngFor="let gradoInstruccion of gradoInstruccionCombo" [ngValue]="gradoInstruccion.ID">
+                                    {{gradoInstruccion.Nombre}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="DestinoCredito">Destino del Crédito (*)</label>
+                            <select class="form-control" id="DestinoCredito" formControlName="destinoCredito">
+                                <option *ngFor="let destinoCredito of destinoCreditoCombo" [ngValue]="destinoCredito.ID">
+                                    {{destinoCredito.Nombre}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label>
+                                <input type="checkbox" formControlName="aceptoTerminos" />(*) Acepto los términos y condiciones de la plataforma, los cuales he leído y entiendo plenamente
+                                <a href="#">Ver Términos</a>
+                            </label>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block" (click)="registerFirstStep()">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Siguiente
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr class="mb-4">
