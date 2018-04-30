@@ -100,8 +100,8 @@
           <mat-header-cell *matHeaderCellDef> Opciones </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <div class="button-row">
-              <button mat-icon-button routerLink="."><mat-icon>insert_invitation</mat-icon></button>
-              <button mat-icon-button routerLink="."><mat-icon>mode_edit</mat-icon></button>
+              <button mat-icon-button><mat-icon>insert_invitation</mat-icon></button>
+              <button mat-icon-button (click)='goEdit(item)'><mat-icon>mode_edit</mat-icon></button>
             </div>
           </mat-cell>
         </ng-container>

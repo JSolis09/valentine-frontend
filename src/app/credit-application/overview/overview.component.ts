@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CreditApplication } from '../credit-application.model';
 
 @Component({
@@ -9,13 +10,17 @@ import { CreditApplication } from '../credit-application.model';
 export class OverviewComponent implements OnInit {
   public displayedColumns: string[];
   public dataSource = APPLICATION_DATA;
-  constructor() {
+  constructor(private router: Router) {
     this.displayedColumns = Object.keys(this.dataSource[0]);
     this.displayedColumns.push('operations');
     console.log(this.displayedColumns);
   }
 
   ngOnInit() {}
+
+  public goEdit(application: CreditApplication): void {
+    this.router.navigate(['credit-application/edit', application.code, 'general']);
+  }
 
 }
 
