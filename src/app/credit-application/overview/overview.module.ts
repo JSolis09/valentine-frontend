@@ -4,6 +4,6 @@ import { OverviewComponent } from './overview.component';
 
 @NgModule({
   imports: [ MaterialModule ],
-  declarations: [OverviewComponent],
+  declarations: [ OverviewComponent ],
 })
 export class OverviewModule { }

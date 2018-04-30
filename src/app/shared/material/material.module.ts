@@ -8,7 +8,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 const MATERIAL_MODULES = [
@@ -20,7 +22,9 @@ const MATERIAL_MODULES = [
   MatIconModule,
   MatInputModule,
   MatSelectModule,
+  MatStepperModule,
   MatTableModule,
+  MatTabsModule,
   MatToolbarModule,
 ];
 
