@@ -1,9 +1,8 @@
 import { Component, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { LocalStoreManager } from './services';
 import { Router } from '@angular/router';
 
+import { LocalStoreManager, SolicitudCreditoService } from './services';
 import { EstadoSolicitudCreditoConstants } from './shared/constants';
-import { SolicitudCreditoService } from './services';
 
 @Component({
   selector: 'app-valentine',
@@ -13,10 +12,9 @@ import { SolicitudCreditoService } from './services';
 })
 export class AppComponent {
   constructor(public viewContainerRef: ViewContainerRef,
-    private storageManager: LocalStoreManager,
-    private router: Router,
-    private solicitudCreditoService: SolicitudCreditoService
-  ) {
+              private storageManager: LocalStoreManager,
+              private router: Router,
+              private solicitudCreditoService: SolicitudCreditoService) {
     this.viewContainerRef = viewContainerRef;
     storageManager.initialiseStorageSyncListener();
     var data = storageManager.getUserData();
@@ -24,7 +22,6 @@ export class AppComponent {
       this.solicitudCreditoService.validarEstado(data.solicitudCreditoId)
         .subscribe((result: number) => {
           if (result == EstadoSolicitudCreditoConstants.REGISTROENPROCESO) {
-
             switch (data.step) {
               case 2:
                 this.router.navigate([`/registerSecondStep/${data.solicitudCreditoId}`]);
