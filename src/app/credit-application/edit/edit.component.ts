@@ -7,6 +7,7 @@ import { ActivatedRoute, NavigationStart, Params, Router } from '@angular/router
   styleUrls: ['./edit.component.css'],
 })
 export class EditComponent implements OnInit {
+  public documentId: string;
   public navLinks = [
     { label: 'General', path: 'general' },
     { label: 'Solicitud', path: 'application' },
@@ -19,8 +20,7 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
-      const userId = params['id'];
-      console.log(userId);
+      this.documentId = params['id'];
     });
   }
 }

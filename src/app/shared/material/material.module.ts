@@ -7,6 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
@@ -21,6 +22,7 @@ const MATERIAL_MODULES = [
   MatNativeDateModule,
   MatIconModule,
   MatInputModule,
+  MatRadioModule,
   MatSelectModule,
   MatStepperModule,
   MatTableModule,

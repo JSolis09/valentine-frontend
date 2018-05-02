@@ -1,3 +1,156 @@
-<p>
-  General
-</p>
+<div class="form-general">
+  <form class="information-form">
+    <h3>Datos generalos</h3>
+    <mat-grid-list cols="2" rowHeight='4em'>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Nombres">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Apellido paterno">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Apellido materno">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput [matDatepicker]="datebirth" placeholder="Fecha de nacimiento">
+          <mat-datepicker-toggle matSuffix [for]="datebirth"></mat-datepicker-toggle>
+          <mat-datepicker #datebirth></mat-datepicker>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select placeholder="Tipo de documento">
+            <mat-option value="">DNI</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <table cellspacing="0">
+          <tr>
+            <td width="80%">
+              <mat-form-field>
+                <input matInput placeholder="Número de documento">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input maxlength="1" matInput placeholder="Digit. Verif">
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <label>Género</label>
+        <mat-radio-group>
+          <mat-radio-button value="M">Masculino</mat-radio-button>
+          <mat-radio-button value="F">Femenino</mat-radio-button>
+        </mat-radio-group>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Correo electrónico">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Número de celular">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Ingreso mensual(S/)">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select placeholder="Grado de instruccion">
+            <mat-option value="">Dimplomado</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+  <form class="address-form">
+    <h3>Dirección y datos del préstamo</h3>
+    <mat-grid-list cols="2" rowHeight='4em'>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Dirección">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Código Postal">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select placeholder="Departamento">
+            <mat-option value="">Lima</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select placeholder="Provincia">
+            <mat-option value="">Lima</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select placeholder="Distrito">
+            <mat-option value="">Lima</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select placeholder="Estado civil">
+            <mat-option value="">Soltero</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+  <form class="couple-form">
+    <h3>Datos de tu pareja</h3>
+    <mat-grid-list cols="2" rowHeight='4em'>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Nombres">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Apellido paterno">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Apellido materno">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select placeholder="Tipo de documento">
+            <mat-option value="">Soltero</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Número de documento">
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
