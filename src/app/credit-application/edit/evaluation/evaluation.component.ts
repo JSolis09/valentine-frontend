@@ -6,8 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./evaluation.component.css']
 })
 export class EvaluationComponent implements OnInit {
+  public folders: any[];
 
-  constructor() { }
+  constructor() {
+    this.folders = [
+      { name: 'contrato_firmado.png'  },
+    ];
+  }
 
   ngOnInit() {
   }

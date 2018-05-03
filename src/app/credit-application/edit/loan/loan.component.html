@@ -1,3 +1,38 @@
-<p>
-  loan works!
-</p>
+<div class="form-general">
+  <form class="information-form">
+    <h3>Datos del préstamo</h3>
+    <mat-grid-list cols="5" rowHeight='4em'>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput [matDatepicker]="datebirth" placeholder="Fecha de nacimiento">
+          <mat-datepicker-toggle matSuffix [for]="datebirth"></mat-datepicker-toggle>
+          <mat-datepicker #datebirth></mat-datepicker>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="TEA final(%)">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="TEM final(%)">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Plazo(meses)">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Número. Instruc">
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+  <div class="table">
+      <h3>Plan de pagos</h3>
+      <a mat-button routerLink=".">Generar plan de pagos</a>
+  </div>
+</div>

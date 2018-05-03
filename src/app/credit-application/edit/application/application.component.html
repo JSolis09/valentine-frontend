@@ -1,3 +1,62 @@
-<p>
-  application works!
-</p>
+<div class="form-general">
+  <form class="information-form">
+    <h3>Datos de la solicitud</h3>
+    <mat-grid-list cols="2" rowHeight='5em'>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Monto solicitado">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select placeholder="Destino solicitado">
+            <mat-option value="">DNI</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="2">
+        <mat-form-field>
+            <textarea matInput placeholder="Detalles del motivo del préstamo"></textarea>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select placeholder="Plazo del préstamo(meses)">
+            <mat-option value="">DNI</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-select placeholder="Seguro de desgravamen">
+            <mat-option value="">DNI</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <label>¿Es una persona politicamente expuesta (PEP) o familiar de una?</label>
+        <mat-radio-group>
+          <mat-radio-button value="M">Masculino</mat-radio-button>
+          <mat-radio-button value="F">Femenino</mat-radio-button>
+        </mat-radio-group>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <textarea matInput placeholder="Posición que ocupa"></textarea>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
+<div class="files-section">
+  <mat-list>
+    <h3 mat-subheader>Folders</h3>
+    <mat-list-item *ngFor="let folder of folders">
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <h4 mat-line>{{folder.name}}</h4>
+      <button mat-icon-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+</div>

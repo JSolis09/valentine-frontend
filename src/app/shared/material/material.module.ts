@@ -7,8 +7,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -22,8 +24,10 @@ const MATERIAL_MODULES = [
   MatNativeDateModule,
   MatIconModule,
   MatInputModule,
+  MatListModule,
   MatRadioModule,
   MatSelectModule,
+  MatSlideToggleModule,
   MatStepperModule,
   MatTableModule,
   MatTabsModule,
