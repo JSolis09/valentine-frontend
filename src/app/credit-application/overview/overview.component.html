@@ -3,110 +3,110 @@
     <span>Buscar solicitudes de crédito</span>
   </mat-toolbar>
   <div class="search-section">
-    <form class="search-form">
+    <div class="search-form" novalidate>
       <mat-grid-list cols="4" rowHeight='5em'>
         <mat-grid-tile>
           <mat-form-field>
-            <input matInput placeholder="DNI">
+            <input matInput placeholder="Numero de Documento" [(ngModel)]="solicitud.NumeroDocumento" />
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
-            <input matInput placeholder="Nombre">
+            <input matInput placeholder="Nombre" [(ngModel)]="solicitud.Solicitante">
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
-            <mat-select placeholder="Estado">
-              <mat-option value="">Estado</mat-option>
+            <mat-select placeholder="Estado" [(ngModel)]="solicitud.EstadoId">
+              <mat-option *ngFor="let item of statusList" [value]="item.id">{{ item.name }}</mat-option>
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
-            <mat-select placeholder="Tipo de préstamo">
-              <mat-option value="">Tipo de préstamo</mat-option>
+            <mat-select placeholder="Destino de crédito" [(ngModel)]="solicitud.DestinoCreditoId">
+              <mat-option *ngFor="let item of creditDestinationList" [value]="item.id">{{ item.name }}</mat-option>
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
-            <input matInput [matDatepicker]="dateFrom" placeholder="Desde">
+            <input matInput [matDatepicker]="dateFrom" placeholder="Desde" [(ngModel)]="solicitud.FechaDesde">
             <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
             <mat-datepicker #dateFrom></mat-datepicker>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
-            <input matInput [matDatepicker]="dateTo" placeholder="Hasta">
+            <input matInput [matDatepicker]="dateTo" placeholder="Hasta" [(ngModel)]="solicitud.FechaHasta">
             <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
             <mat-datepicker #dateTo></mat-datepicker>
           </mat-form-field>
         </mat-grid-tile>
+        <mat-grid-tile>
+          <button mat-raised-button color="primary" (click)="search()">Buscar</button>
+        </mat-grid-tile>
       </mat-grid-list>
-    </form>
+    </div>
   </div>
   <div class="example-container mat-elevation-z8">
     <mat-table #table [dataSource]="dataSource">
-      <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-        <!-- Code Column -->
-        <ng-container matColumnDef="code">
-          <mat-header-cell *matHeaderCellDef> Codigo </mat-header-cell>
-          <mat-cell *matCellDef="let item"> {{item.code}} </mat-cell>
-        </ng-container>
-        <!-- Candidate Column -->
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Solicitante </mat-header-cell>
-          <mat-cell *matCellDef="let item"> {{item.name}} </mat-cell>
-        </ng-container>
-        <!-- DNI Column -->
-        <ng-container matColumnDef="dni">
-          <mat-header-cell *matHeaderCellDef> DNI </mat-header-cell>
-          <mat-cell *matCellDef="let item"> {{item.dni}} </mat-cell>
-        </ng-container>
-        <!-- Amount Column -->
-        <ng-container matColumnDef="amount">
-          <mat-header-cell *matHeaderCellDef> Monto </mat-header-cell>
-          <mat-cell *matCellDef="let item"> {{item.amount}} </mat-cell>
-        </ng-container>
-        <!-- date Column -->
-        <ng-container matColumnDef="date">
-          <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
-          <mat-cell *matCellDef="let item"> {{item.date | date:'dd/MM/yyyy'}} </mat-cell>
-        </ng-container>
-        <!-- period Column -->
-        <ng-container matColumnDef="period">
-          <mat-header-cell *matHeaderCellDef> Plazo </mat-header-cell>
-          <mat-cell *matCellDef="let item"> {{item.period}} </mat-cell>
-        </ng-container>
-        <!-- status Column -->
-        <ng-container matColumnDef="status">
-          <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-          <mat-cell *matCellDef="let item"> {{item.status}} </mat-cell>
-        </ng-container>
-        <!-- penTEA Column -->
-        <ng-container matColumnDef="penTea">
-          <mat-header-cell *matHeaderCellDef> TEA (Sol.) </mat-header-cell>
-          <mat-cell *matCellDef="let item"> {{item.penTea}} </mat-cell>
-        </ng-container>
-        <!-- finalTEA Column -->
-        <ng-container matColumnDef="finalTea">
-          <mat-header-cell *matHeaderCellDef> TEA (Final) </mat-header-cell>
-          <mat-cell *matCellDef="let item"> {{item.finalTea}} </mat-cell>
-        </ng-container>
-        <!-- operation Column -->
-        <ng-container matColumnDef="operations">
-          <mat-header-cell *matHeaderCellDef> Opciones </mat-header-cell>
-          <mat-cell *matCellDef="let item">
-            <div class="button-row">
-              <button mat-icon-button><mat-icon>insert_invitation</mat-icon></button>
-              <button mat-icon-button (click)='goEdit(item)'><mat-icon>mode_edit</mat-icon></button>
-            </div>
-          </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-    </div>
+      <!-- Code Column -->
+      <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef> Num </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.code}} </mat-cell>
+      </ng-container>
+      <!-- Candidate Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Solicitante </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.name}} </mat-cell>
+      </ng-container>
+      <!-- documentNumber Column -->
+      <ng-container matColumnDef="documentNumber">
+        <mat-header-cell *matHeaderCellDef> Numero de documento </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.documentNumber}} </mat-cell>
+      </ng-container>
+      <!-- Amount Column -->
+      <ng-container matColumnDef="amount">
+        <mat-header-cell *matHeaderCellDef> Monto </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.amount | currency:'S/ '}} </mat-cell>
+      </ng-container>
+      <!-- date Column -->
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef> Fecha presentación</mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.date | date:'dd/MM/yyyy'}} </mat-cell>
+      </ng-container>
+      <!-- period Column -->
+      <ng-container matColumnDef="period">
+        <mat-header-cell *matHeaderCellDef> Plazo </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.period}} </mat-cell>
+      </ng-container>
+      <!-- status Column -->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.status}} </mat-cell>
+      </ng-container>
+      <!-- penTEA Column -->
+      <ng-container matColumnDef="penTea">
+        <mat-header-cell *matHeaderCellDef> TEA (asig) </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.penTea | percent}} </mat-cell>
+      </ng-container>
+      <!-- finalTEA Column -->
+      <ng-container matColumnDef="finalTea">
+        <mat-header-cell *matHeaderCellDef> TEA (Final) </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.finalTea | percent}} </mat-cell>
+      </ng-container>
+      <!-- operation Column -->
+      <ng-container matColumnDef="operations">
+        <mat-header-cell *matHeaderCellDef> Opciones </mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <div class="button-row">
+            <button mat-icon-button (click)='goEdit(item)'><mat-icon>mode_edit</mat-icon></button>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
   </div>
+</div>

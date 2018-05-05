@@ -1,3 +1,7 @@
+.align-baseline figure {
+  align-items: baseline;
+}
+
 .evaluation .full-width {
   width: 100%;
 }

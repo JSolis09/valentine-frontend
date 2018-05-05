@@ -1,5 +1,5 @@
 <div class="evaluation">
-  <mat-grid-list cols="2">
+  <mat-grid-list class="align-baseline" cols="2" rowHeight='25em'>
     <mat-grid-tile>
       <table class="full-width">
         <tr>
@@ -109,40 +109,43 @@
       </table>
     </mat-grid-tile>
   </mat-grid-list>
-  <mat-grid-list class="form-subasta" cols="2" rowHeight='4em'>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput placeholder="Monto recaudado(S/)">
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput placeholder="Avance de financiamiento(%)">
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [matDatepicker]="dateInit" placeholder="Fecha de inicio">
-        <mat-datepicker-toggle matSuffix [for]="dateInit"></mat-datepicker-toggle>
-        <mat-datepicker #dateInit></mat-datepicker>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [matDatepicker]="dateEnd" placeholder="Fecha de finalizacion">
-        <mat-datepicker-toggle matSuffix [for]="dateEnd"></mat-datepicker-toggle>
-        <mat-datepicker #dateEnd></mat-datepicker>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput placeholder="Número de acreedores">
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput placeholder="Estado de la subasta">
-      </mat-form-field>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div class="subasta-section">
+    <h3>Datos de la subasta</h3>
+    <mat-grid-list class="form-subasta" cols="2" rowHeight='4em'>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Monto recaudado(S/)">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Avance de financiamiento(%)">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput [matDatepicker]="dateInit" placeholder="Fecha de inicio">
+          <mat-datepicker-toggle matSuffix [for]="dateInit"></mat-datepicker-toggle>
+          <mat-datepicker #dateInit></mat-datepicker>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput [matDatepicker]="dateEnd" placeholder="Fecha de finalizacion">
+          <mat-datepicker-toggle matSuffix [for]="dateEnd"></mat-datepicker-toggle>
+          <mat-datepicker #dateEnd></mat-datepicker>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Número de acreedores">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="Estado de la subasta">
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 </div>
