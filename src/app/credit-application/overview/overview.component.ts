@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CreditApplication } from '../credit-application.model';
+import { CreditApplication, CreditApplicationDTO, Parameter, SearchCreditApplicationDTO } from '../credit-application.model';
+import { CreditApplicationService } from '../credit-application.service';
 
 @Component({
   selector: 'app-overview',
@@ -9,108 +10,46 @@ import { CreditApplication } from '../credit-application.model';
 })
 export class OverviewComponent implements OnInit {
   public displayedColumns: string[];
-  public dataSource = APPLICATION_DATA;
-  constructor(private router: Router) {
-    this.displayedColumns = Object.keys(this.dataSource[0]);
-    this.displayedColumns.push('operations');
-    console.log(this.displayedColumns);
+  public dataSource: CreditApplication[];
+  public statusList: Parameter[];
+  public creditDestinationList: Parameter[];
+  public solicitud: SearchCreditApplicationDTO = new SearchCreditApplicationDTO();
+
+  constructor(private router: Router,
+              private creditApplicationService: CreditApplicationService) {
+    this.displayedColumns = [];
+    this.dataSource = [];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.creditApplicationService
+      .getAllStatusCreditApplication()
+      .subscribe((response) => {
+        this.statusList = response;
+      });
+    this.creditApplicationService
+      .getAllCreditDestination()
+      .subscribe((response) => {
+        this.creditDestinationList = response;
+      });
+    this.search();
+  }
 
   public goEdit(application: CreditApplication): void {
-    this.router.navigate(['credit-application/edit', application.code, 'general']);
+    this.router
+        .navigate(['credit-application/edit', application.code, 'general']);
+  }
+
+  public search(): void {
+    console.log(this.solicitud);
+    this.creditApplicationService
+      .getCreditApplication(this.solicitud)
+      .subscribe((response: CreditApplication[]) => {
+        this.dataSource = response;
+        this.displayedColumns = Object.keys(this.dataSource[0]);
+        this.displayedColumns.push('operations');
+        console.log(response);
+      });
   }
 
 }
-
-const APPLICATION_DATA: CreditApplication[] = [
-  {
-    code: 'VL-5678',
-    name: 'Juan Perez',
-    dni: '45126578',
-    amount: 20000,
-    date: new Date(),
-    period: 12,
-    status: 'Formalizado',
-    penTea: '25%',
-    finalTea: '25%',
-  },
-  {
-    code: 'VL-5678',
-    name: 'Juan Perez',
-    dni: '45126578',
-    amount: 20000,
-    date: new Date(),
-    period: 12,
-    status: 'Formalizado',
-    penTea: '25%',
-    finalTea: '25%',
-  },
-  {
-    code: 'VL-5678',
-    name: 'Juan Perez',
-    dni: '45126578',
-    amount: 20000,
-    date: new Date(),
-    period: 12,
-    status: 'Formalizado',
-    penTea: '25%',
-    finalTea: '25%',
-  },
-  {
-    code: 'VL-5678',
-    name: 'Juan Perez',
-    dni: '45126578',
-    amount: 20000,
-    date: new Date(),
-    period: 12,
-    status: 'Formalizado',
-    penTea: '25%',
-    finalTea: '25%',
-  },
-  {
-    code: 'VL-5678',
-    name: 'Juan Perez',
-    dni: '45126578',
-    amount: 20000,
-    date: new Date(),
-    period: 12,
-    status: 'Formalizado',
-    penTea: '25%',
-    finalTea: '25%',
-  },
-  {
-    code: 'VL-5678',
-    name: 'Juan Perez',
-    dni: '45126578',
-    amount: 20000,
-    date: new Date(),
-    period: 12,
-    status: 'Formalizado',
-    penTea: '25%',
-    finalTea: '25%',
-  },
-  {
-    code: 'VL-5678',
-    name: 'Juan Perez',
-    dni: '45126578',
-    amount: 20000,
-    date: new Date(),
-    period: 12,
-    status: 'Formalizado',
-    penTea: '25%',
-    finalTea: '25%',
-  },
-  {
-    code: 'VL-5678',
-    name: 'Juan Perez',
-    dni: '45126578',
-    amount: 20000,
-    date: new Date(),
-    period: 12,
-    status: 'Formalizado',
-    penTea: '25%',
-    finalTea: '25%',
-  },
-];
