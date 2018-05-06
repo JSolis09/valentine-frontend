@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ArchivoService, ClipsService, HttpService, LocalStoreManager, ParametroService, SolicitudCreditoService, UbigeoService, SubastaService } from '../app/services';
 import { CreditApplicationModule } from './credit-application/credit-application.module';
 import { SharedComponentModule } from './shared/shared.module';
+import { ParticipacionesComponent } from './auth/reportes/participaciones/participaciones.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { SharedComponentModule } from './shared/shared.module';
   ],
   declarations: [
     AppComponent,
+    ParticipacionesComponent,
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
