@@ -27,6 +27,10 @@ const routes: Routes = [
         loadChildren: './../home/home.module#HomeModule'
     },
     {
+        path: 'reportSubasta',
+        loadChildren: './../reportSubasta/reportSubasta.module#ReportSubastaModule'
+    },
+    {
         path: '**',
         redirectTo: 'home',
         pathMatch: 'full',

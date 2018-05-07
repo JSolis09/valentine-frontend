@@ -1,13 +1,17 @@
 import { Routes } from '@angular/router';
-import { OverviewRoutes } from './overview/overview.route';
+
+
 import { EditRoutes } from './edit/edit.route';
+import { OverviewRoutes } from './overview/overview.route';
+import { ReportsRoutes } from './reports/reports.route';
 
 export const CreditApplicationRoutes: Routes = [
   {
-      path: 'credit-application',
-      children: [
-        ...OverviewRoutes,
-        ...EditRoutes,
-      ],
+    path: 'credit-application',
+    children: [
+      ...EditRoutes,
+      ...OverviewRoutes,
+      ...ReportsRoutes,
+    ],
   },
 ];

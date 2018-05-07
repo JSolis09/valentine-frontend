@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { HttpService } from '../services/http.service';
-import { CreditApplication, CreditApplicationDTO, CreditApplicationResponse,
-         Parameter, ParameterDTO, SearchCreditApplicationDTO, SolicitudCredito, UbigeoDTO } from './credit-application.model';
+
+import { BaseResponse, CreditApplication, CreditApplicationDTO, DetailProfitability,
+         DetailProfitabilityRequest, DetailProfitabilityResponse, Parameter,
+         ParameterDTO, Profitability, ProfitabilityDTO,
+         SearchCreditApplicationDTO, SolicitudCredito, UbigeoDTO} from './credit-application.model';
 
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
@@ -19,6 +22,10 @@ export class CreditApplicationService {
     },
     ubigeo: {
       getByPadreId: (id: string) => `${HOST}/${PREFIX}/${MODULES.ubigeo}/GetByPadreID?id=${id}`,
+    },
+    ingreso: {
+      getReporteRentabilidad: (cod: string) => `${HOST}/${PREFIX}/${MODULES.ingreso}/GetReporteRentabilidad?codigoInversor=${cod}`,
+      getReporteRentabilidadDetalle: () => `${HOST}/${PREFIX}/${MODULES.ingreso}/GetReporteRentabilidadDetalle`,
     },
   };
 
@@ -63,18 +70,16 @@ export class CreditApplicationService {
     return this.getAnyParamList(PARAMS_IDS.maritalStatus);
   }
 
-  getUbigeo(parentId: string = '0'): Observable<UbigeoDTO[]> {
-    return this.http
-      .get<UbigeoDTO[]>(this.methods.ubigeo.getByPadreId(parentId));
+  getCodeByMonthName(month: string): number {
+    return MONTH.indexOf(month) + 1;
   }
 
-  getCreditApplication(creditApplication: SearchCreditApplicationDTO): Observable<CreditApplication[]> {
+  getCreditApplication(creditApplication: SearchCreditApplicationDTO): Observable<BaseResponse<CreditApplication>> {
     return this.http
-      .post<CreditApplicationResponse>(this.methods.creditApplication.searchCreditApplication(), creditApplication)
-      .map<CreditApplicationResponse, CreditApplicationDTO[]>((response) => response.data )
-      .map<CreditApplicationDTO[], CreditApplication[]>((response) => {
-        response = response || [];
-        return response.map((applicationDto: CreditApplicationDTO) => {
+      .post<BaseResponse<CreditApplicationDTO>>(this.methods.creditApplication.searchCreditApplication(), creditApplication)
+      .map<BaseResponse<CreditApplicationDTO>, BaseResponse<CreditApplication>>((response) => {
+        const list = response.data;
+        const data: CreditApplication[] = list.map((applicationDto: CreditApplicationDTO) => {
           return {
             amount: applicationDto.MontoSolicitado,
             code: applicationDto.CodigoSolCredito,
@@ -87,7 +92,66 @@ export class CreditApplicationService {
             status: applicationDto.EstadoDescripcion,
           };
         });
+        return {
+          data,
+          total: response.total,
+        };
       });
+  }
+
+  getProfitabilityReport(inversorId: string): Observable<Profitability[]> {
+    return this.http
+      .get<ProfitabilityDTO[]>(this.methods.ingreso.getReporteRentabilidad(inversorId))
+      .map<ProfitabilityDTO[], Profitability[]>((response) => {
+        response = response || [];
+        return response.map((profitabilityDto: ProfitabilityDTO) => {
+          return {
+            period: `${this.getMonthByCode(profitabilityDto.Mes)} ${profitabilityDto.Anio}`,
+            capital: profitabilityDto.Capital,
+            interest: profitabilityDto.Interes,
+            mora: profitabilityDto.Moras,
+            commission: profitabilityDto.Comision,
+            repayment: profitabilityDto.RetornoNeto,
+            fee: profitabilityDto.Cuotas,
+          };
+        });
+      });
+  }
+
+  getProfitabilityDetailReport(data: DetailProfitabilityRequest): Observable<BaseResponse<DetailProfitability>> {
+    return this.http
+      .post<BaseResponse<DetailProfitabilityResponse>>(this.methods.ingreso.getReporteRentabilidadDetalle(), data)
+      .map<BaseResponse<DetailProfitabilityResponse>, BaseResponse<DetailProfitability>>((response) => {
+        const list = response.data;
+        const detailProfitabilityList: DetailProfitability[] = list.map((detailProfitability: DetailProfitabilityResponse) => {
+          return {
+            loanFee: detailProfitability.CuotaPrestamo,
+            capital: detailProfitability.Capital,
+            interest: detailProfitability.Interes,
+            mora: detailProfitability.Moras,
+            commission: detailProfitability.Comision,
+            repayment: detailProfitability.RetornoNeto,
+            fee: detailProfitability.Cuota,
+            expiredDate: detailProfitability.Vence,
+            status: detailProfitability.EstadoNombre,
+            amount: detailProfitability.Monto,
+            rate: detailProfitability.Tasa,
+          };
+        });
+        return {
+          data: detailProfitabilityList,
+          total: response.total,
+        };
+      });
+  }
+
+  getUbigeo(parentId: string = '0'): Observable<UbigeoDTO[]> {
+    return this.http
+      .get<UbigeoDTO[]>(this.methods.ubigeo.getByPadreId(parentId));
+  }
+
+  private getMonthByCode(code: number): string {
+    return MONTH[code - 1];
   }
 }
 
@@ -97,6 +161,7 @@ const MODULES = {
   params: 'T_Parametro',
   creditApplication: 'T_SolicitudCredito',
   ubigeo: 'T_Ubigeo',
+  ingreso: 'T_Ingreso',
 };
 
 const PARAMS_IDS = {
@@ -107,3 +172,18 @@ const PARAMS_IDS = {
   grade: '4',
   maritalStatus: '16',
 };
+
+const MONTH: string[] = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Setiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciemnbre',
+];

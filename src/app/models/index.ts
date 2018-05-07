@@ -12,3 +12,4 @@ export * from './clipsServiceRequest.model';
 export * from './enviarMail.model';
 export * from './clipsServiceResponse.model';
 export * from './subasta.model';
+export * from './reportSubasta.model';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs';
 
-import { SubastaModel } from '../models';
+import { SubastaModel, ReportSubastaModel } from '../models';
 import { EnviromentsConstants, HostnameConstants } from '../shared/constants';
 import { HttpService } from './http.service';
 import { Utilities } from './utilities';
@@ -23,5 +23,10 @@ export class SubastaService {
     public addSubasta(model: SubastaModel): Observable<SubastaModel> {
         this.URL = `${this.REQUEST_URL}`;
         return this.httpService.post(this.URL, model);
+    }
+
+    public getSubastaReport(): Observable<ReportSubastaModel[]> {
+        this.URL = `${this.REQUEST_URL}/GetReportSubastas`;
+        return this.httpService.get(this.URL);
     }
 }

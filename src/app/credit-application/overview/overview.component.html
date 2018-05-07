@@ -108,5 +108,12 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+    <nav class="pagination-section" aria-label="Page navigation example" *ngIf="numPages.length > 1">
+      <ul class="pagination justify-content-end">
+        <li class="page-item" *ngFor="let page of numPages; let i = index;" [class.active]="currentPage === page">
+          <a class="page-link" (click)="search(page)">{{ page }}</a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>

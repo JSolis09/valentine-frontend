@@ -14,3 +14,7 @@
 .search-form mat-form-field {
   width: 100%;
 }
+
+.pagination-section {
+  margin-top: 1em;
+}
