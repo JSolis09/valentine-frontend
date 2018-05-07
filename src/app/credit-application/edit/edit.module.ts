@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from '../../shared/material/material.module';
+import { CreditApplicationService } from '../credit-application.service';
 import { ApplicationModule } from './application/application.module';
 import { EditComponent } from './edit.component';
 import { EditRoutes } from './edit.route';
@@ -21,5 +22,6 @@ import { LoanModule } from './loan/loan.module';
     LoanModule,
   ],
   declarations: [ EditComponent ],
+  providers: [ CreditApplicationService ],
 })
 export class EditModule { }

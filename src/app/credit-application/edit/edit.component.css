@@ -1,0 +1,12 @@
+.container .tab-section {
+  display: flex;
+}
+
+.container .tab-section .content  {
+  flex: 4;
+}
+
+.container .tab-section .actions  {
+  flex: 1;
+}
+

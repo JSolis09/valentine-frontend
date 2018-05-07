@@ -1,5 +1,9 @@
-.align-baseline figure {
-  align-items: baseline;
+.evaluation-section {
+  display: flex;
+}
+
+.evaluation-section .column {
+  flex: 1;
 }
 
 .evaluation .full-width {
