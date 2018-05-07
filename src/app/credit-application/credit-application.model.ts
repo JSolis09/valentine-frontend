@@ -75,3 +75,27 @@ export class UbigeoDTO {
   Ubigeo_ID: number;
   Ubigeo_Padre: number;
 }
+
+export class Profitability {
+  period: string;
+  capital: number;
+  interest: number;
+  mora: number;
+  commission: number;
+  repayment: number;
+  fee: number;
+}
+
+export class DetailProfitability {
+  loanFee: string;
+  capital: number;
+  interest: number;
+  mora: number;
+  commission: number;
+  repayment: number;
+  fee: string;
+  expiredDate: Date;
+  status: string;
+  amount: number;
+  rate: number;
+}

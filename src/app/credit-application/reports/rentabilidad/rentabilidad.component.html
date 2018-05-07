@@ -1,0 +1,53 @@
+<div class="container">
+  <h3>Reporte de rentabilidad anual proyectada</h3>
+  <div class="profitability-">
+    <mat-table #table [dataSource]="dataSource">
+      <!-- period Column -->
+      <ng-container matColumnDef="period">
+        <mat-header-cell *matHeaderCellDef> Period </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.period}} </mat-cell>
+      </ng-container>
+      <!-- capital Column -->
+      <ng-container matColumnDef="capital">
+        <mat-header-cell *matHeaderCellDef> Capital </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.capital | currency:'S/'}} </mat-cell>
+      </ng-container>
+       <!-- interest Column -->
+       <ng-container matColumnDef="interest">
+        <mat-header-cell *matHeaderCellDef> Interés </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.interest | currency:'S/'}} </mat-cell>
+      </ng-container>
+      <!-- mora Column -->
+      <ng-container matColumnDef="mora">
+        <mat-header-cell *matHeaderCellDef> Moras </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.mora | currency:'S/'}} </mat-cell>
+      </ng-container>
+      <!-- commission Column -->
+      <ng-container matColumnDef="commission">
+        <mat-header-cell *matHeaderCellDef> Comisión </mat-header-cell>
+        <mat-cell *matCellDef="let item"> S/{{item.commission | currency:' '}} </mat-cell>
+      </ng-container>
+      <!-- repayment Column -->
+      <ng-container matColumnDef="repayment">
+        <mat-header-cell *matHeaderCellDef> Retorno neto</mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.repayment | currency:'S/'}} </mat-cell>
+      </ng-container>
+      <!-- fee Column -->
+      <ng-container matColumnDef="fee">
+        <mat-header-cell *matHeaderCellDef> Cuotas </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.fee | currency:'S/' }} </mat-cell>
+      </ng-container>
+      <!-- detail Column -->
+      <ng-container matColumnDef="detail">
+        <mat-header-cell *matHeaderCellDef> Detalle </mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <div class="button-row">
+            <button mat-icon-button (click)='goDetail(item)'>Ver detalle</button>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+</div>
