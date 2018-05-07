@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Schedule } from '../../credit-application.model';
+import { Schedule, SolicitudCredito } from '../../credit-application.model';
+import { CreditApplicationService } from '../../credit-application.service';
 
 @Component({
   selector: 'app-loan',
@@ -9,88 +10,35 @@ import { Schedule } from '../../credit-application.model';
 })
 export class LoanComponent implements OnInit {
   public displayedColumns: string[];
-  public dataSource = SCHEDULE_DATA;
+  public dataSource: Schedule[];
+  public solicitud: SolicitudCredito;
 
-  constructor() {
-    this.displayedColumns = Object.keys(this.dataSource[0]);
-    this.displayedColumns.unshift('index');
+  constructor(private creditApplicationService: CreditApplicationService) { }
+
+  ngOnInit() {
+    this.solicitud = this.creditApplicationService.solicitudCredito;
+    this.mapSchedule();
   }
 
-  ngOnInit() { }
+  mapSchedule(): void {
+    this.dataSource = [];
+    const cuotas = this.creditApplicationService.solicitudCredito.Cuotas || [];
+    cuotas.forEach((cuota) => {
+      this.dataSource.push({
+        id: cuota.CodigoCuota,
+        amount: cuota.Monto,
+        expiryDate: cuota.Vencimiento,
+        status: cuota.EstadoNombre,
+        fee: cuota.CuotaOriginal,
+        interest: cuota.InteresMoratorio,
+        expense: cuota.GastosAdministrativos,
+        payment: cuota.Pago,
+        paymentDate: cuota.FechaPago,
+        arrears: 0,
+        debt: null,
+      });
+    });
+    this.displayedColumns = Object.keys(this.dataSource[0]);
+  }
 
 }
-
-const SCHEDULE_DATA: Schedule[] = [
-  {
-    amount: 82.34,
-    expiryDate: new Date(),
-    status: 'Pago',
-    fee: null,
-    interest: null,
-    expense: null,
-    payment: 82.34,
-    paymentDate: new Date(),
-    arrears: 0,
-    debt: null,
-  },
-  {
-    amount: 82.34,
-    expiryDate: new Date(),
-    status: 'Pago',
-    fee: null,
-    interest: null,
-    expense: null,
-    payment: 82.34,
-    paymentDate: new Date(),
-    arrears: 0,
-    debt: null,
-  },
-  {
-    amount: 82.34,
-    expiryDate: new Date(),
-    status: 'Pago',
-    fee: null,
-    interest: null,
-    expense: null,
-    payment: 82.34,
-    paymentDate: new Date(),
-    arrears: 0,
-    debt: null,
-  },
-  {
-    amount: 82.34,
-    expiryDate: new Date(),
-    status: 'Pago',
-    fee: null,
-    interest: null,
-    expense: null,
-    payment: 82.34,
-    paymentDate: new Date(),
-    arrears: 0,
-    debt: null,
-  },
-  {
-    amount: 82.34,
-    expiryDate: new Date(),
-    status: 'Pago',
-    fee: null,
-    interest: null,
-    expense: null,
-    payment: 82.34,
-    paymentDate: new Date(),
-    arrears: 0,
-    debt: null,
-  },
-  {
-    amount: 82.34,
-    expiryDate: new Date(),
-    status: 'Pago',
-    fee: null,
-    interest: null,
-    expense: null,
-    payment: 82.34,
-    paymentDate: new Date(),
-    arrears: 0,
-    debt: null,
-  },
-];

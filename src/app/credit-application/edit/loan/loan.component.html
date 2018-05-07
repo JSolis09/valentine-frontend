@@ -1,45 +1,44 @@
 <div class="form-general">
-  <form class="information-form">
+  <div class="information-form">
     <h3>Datos del préstamo</h3>
     <mat-grid-list class="loan-info" cols="5" rowHeight='4em'>
       <mat-grid-tile>
         <mat-form-field>
-          <input matInput [matDatepicker]="datebirth" placeholder="Fecha de inicio">
+          <input disabled matInput [matDatepicker]="datebirth" placeholder="Fecha de inicio" [(ngModel)]="solicitud.PrestamoFechaInicio">
           <mat-datepicker-toggle matSuffix [for]="datebirth"></mat-datepicker-toggle>
           <mat-datepicker #datebirth></mat-datepicker>
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
         <mat-form-field>
-          <input matInput placeholder="TEA final(%)">
+          <input disabled matInput placeholder="TEA final(%)" [(ngModel)]="solicitud.PrestamoTeaFinal">
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
         <mat-form-field>
-          <input matInput placeholder="TEM final(%)">
+          <input disabled matInput placeholder="TEM final(%)" [(ngModel)]="solicitud.PrestamoTemFinal">
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
         <mat-form-field>
-          <input matInput placeholder="Plazo(meses)">
+          <input disabled matInput placeholder="Plazo(meses)" [(ngModel)]="solicitud.PlazoPrestamo">
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
         <mat-form-field>
-          <input matInput placeholder="Número. Instruc">
+          <input disabled matInput placeholder="Número. Instruc" [(ngModel)]="solicitud.PrestamoNumeroInstruccion">
         </mat-form-field>
       </mat-grid-tile>
     </mat-grid-list>
-  </form>
+  </div>
   <div class="table">
     <h3>Plan de pagos</h3>
-    <a mat-button routerLink=".">Generar plan de pagos</a>
     <div class="example-container mat-elevation-z8">
       <mat-table #table [dataSource]="dataSource">
-        <!-- index Column -->
-        <ng-container matColumnDef="index">
+        <!-- id Column -->
+        <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> N° </mat-header-cell>
-          <mat-cell *matCellDef="let item; let i = index"> {{ i + 1 }} </mat-cell>
+          <mat-cell *matCellDef="let item"> {{ item.id }} </mat-cell>
         </ng-container>
         <!-- amount Column -->
         <ng-container matColumnDef="amount">

@@ -57,7 +57,7 @@ export class PaginationDTO {
 }
 
 export class Schedule {
-  id?: string;
+  id?: string |number;
   amount: number;
   expiryDate: Date;
   status: string;
@@ -70,14 +70,96 @@ export class Schedule {
   debt: number;
 }
 
+export class Cuotas {
+  CodigoCuota: number;
+  CuotaOriginal: number;
+  EstadoId: number;
+  EstadoNombre: string;
+  FechaPago: Date;
+  GastosAdministrativos: number;
+  InteresMoratorio: number;
+  Monto: number;
+  Pago: number;
+  Vencimiento: Date;
+}
+
 export class UbigeoDTO {
   Nombre: string;
   Ubigeo_ID: number;
   Ubigeo_Padre: number;
 }
 
+export class SolicitudCreditoRequest {
+  CodigoSolCredito: string;
+  CodigoInterbancario: string;
+  CodigoSubasta: number;
+  CodigoPrestamo: number;
+  DepartamentoSolicitanteId: number;
+  DireccionSolicitante: string;
+  DistritoSolicitanteId: number;
+  EsContratoGuardado: boolean;
+  EstadoSolicitudId: number;
+  NombreEntidadId: number;
+  NumeroCelular: string;
+  PaisSolicitanteId: number;
+  ProvinciaSolicitanteId: number;
+  TipoCuentaId: number;
+}
+
 export class SolicitudCredito {
-  nombres: string = '';
+  ApellidoMaternoConyuge: string;
+  ApellidoMaternoSolicitante: string;
+  ApellidoPaternoConyuge: string;
+  ApellidoPaternoSolicitante: string;
+  AreaActividadId: number;
+  ArchivoContrato: any[];
+  CargoPep: any;
+  CodigoInterbancario: string;
+  CodigoSolCredito: string;
+  CorreoElectronico: string;
+  CodigoSubasta: number;
+  CodigoPrestamo: number;
+  Cuotas: Cuotas[];
+  DepartamentoSolicitanteId: number;
+  DestinoCreditoId: number;
+  DetalleMotivo: string;
+  DigitoVerificacion: string;
+  DireccionSolicitante: string;
+  DireccionVerificada: string;
+  DistritoSolicitanteId: number;
+  DniVerificado: string;
+  EsContratoCargado: boolean;
+  EsPep: boolean;
+  EstadoCivilId: number;
+  EstadoSolicitudId: number;
+  EstadoSubastaId: number;
+  FechaNacimiento: Date | string;
+  GeneroId: number;
+  GradoInstruccionId: number;
+  IngresoMensual: number;
+  IngresoVerificado: any;
+  LugarTrabajo: string;
+  MontoRecaudado: number;
+  MontoSolicitado: number;
+  NombreConyuge: string;
+  NombreEntidadId: number;
+  NombreSolicitante: string;
+  NumeroCelular: string;
+  NumeroDocumento: string;
+  NumeroDocumentoConyuge: string;
+  OcupacionId: number;
+  PaisSolicitanteId: number;
+  PerfilAsignadoId: number;
+  PerfilAsignadoNombre: string;
+  PlazoPrestamo: number;
+  PrestamoCodigo: number;
+  ProvinciaSolicitanteId: number;
+  PuntuacionBuro: number;
+  SeguroDesgravamenId: number;
+  TeaAsignada: number;
+  TipoCuentaId: number;
+  TipoDocumentoConyugeId: number;
+  TipoDocumentoId: number;
 }
 
 export class Profitability {
@@ -136,4 +218,3 @@ export class DetailProfitability {
   amount: number;
   rate: number;
 }
-

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Parameter } from '../../credit-application.model';
+import { Parameter, SolicitudCredito } from '../../credit-application.model';
 import { CreditApplicationService } from '../../credit-application.service';
+
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-application',
@@ -11,21 +13,38 @@ import { CreditApplicationService } from '../../credit-application.service';
 export class ApplicationComponent implements OnInit {
   public folders: any[];
   public creditDestinationList: Parameter[];
+  public seguroDesgravamenList: Parameter[];
+  public activityAreaList: Parameter[];
+  public jobList: Parameter[];
+  public typeAccountList: Parameter[];
+  public bankList: Parameter[];
+  public solicitud: SolicitudCredito = new SolicitudCredito();
+  public formularios: any = {};
 
   constructor(private creditApplicationService: CreditApplicationService) {
     this.creditDestinationList = [];
-    this.folders = [
-      { name: 'DNI_ambos_lados.png'  },
-      { name: 'recibo_telefónico_actual.png'  },
-      { name: 'Boletas_de_pago.png'  },
-    ];
   }
 
   ngOnInit() {
-    this.creditApplicationService
-      .getAllCreditDestination()
+    Observable.forkJoin(this.creditApplicationService.getAllCreditDestination(),
+                        this.creditApplicationService.getSeguroDesgravamen(),
+                        this.creditApplicationService.getAllActivityArea(),
+                        this.creditApplicationService.getAllJobs(),
+                        this.creditApplicationService.getAllTypeAccount(),
+                        this.creditApplicationService.getAllBank())
       .subscribe((response) => {
-        this.creditDestinationList = response;
+        this.creditDestinationList = response[0];
+        this.seguroDesgravamenList = response[1];
+        this.activityAreaList = response[2];
+        this.jobList = response[3];
+        this.typeAccountList = response[4];
+        this.bankList = response[5];
+        this.solicitud = this.creditApplicationService.solicitudCredito;
+        this.formularios = {
+          enabled: this.solicitud.EstadoSolicitudId === 55 && (this.solicitud.EstadoSubastaId === 67 ||  this.solicitud.EstadoSubastaId === 71) ||
+                   this.solicitud.EstadoSolicitudId === 63 && (this.solicitud.EstadoSubastaId === 69 ||  this.solicitud.EstadoSubastaId === 72) ,
+
+        };
       });
   }
 

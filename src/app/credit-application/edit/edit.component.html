@@ -10,7 +10,7 @@
   </nav>
   <h4>Solicitud de crédito N° {{ documentId  }}</h4>
   <div class="tab-section">
-    <div class="content">
+    <div class="content" *ngIf="showChildView">
       <router-outlet></router-outlet>
     </div>
     <div class="actions">

@@ -5,7 +5,7 @@ import { HttpService } from '../services/http.service';
 import { BaseResponse, CreditApplication, CreditApplicationDTO, DetailProfitability,
          DetailProfitabilityRequest, DetailProfitabilityResponse, Parameter,
          ParameterDTO, Profitability, ProfitabilityDTO,
-         SearchCreditApplicationDTO, SolicitudCredito, UbigeoDTO} from './credit-application.model';
+         SearchCreditApplicationDTO, SolicitudCredito, SolicitudCreditoRequest, UbigeoDTO} from './credit-application.model';
 
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
@@ -15,17 +15,22 @@ export class CreditApplicationService {
   public solicitudCredito: SolicitudCredito = new SolicitudCredito();
   private methods = {
     params: {
-      getByPadreId: (id: string) => `${HOST}/${PREFIX}/${MODULES.params}/GetByPadreID?id=${id}`,
+      getByPadreId: (id: string) => `${HOST}/${MODULES.params}/GetByPadreID?id=${id}`,
     },
     creditApplication: {
-      searchCreditApplication: () => `${HOST}/${PREFIX}/${MODULES.creditApplication}/SearchSolicitudCredito`,
+      searchCreditApplication: () => `${HOST}/${MODULES.creditApplication}/SearchSolicitudCredito`,
+      getSolicitudCreditoByCode: (code: string) => `${HOST}/${MODULES.creditApplication}/GetSolicitudCreditoByCodigo?codigo=${code}`,
+      saveSolicitud: () => `${HOST}/${MODULES.creditApplication}/GuardarSolicitud`,
     },
     ubigeo: {
-      getByPadreId: (id: string) => `${HOST}/${PREFIX}/${MODULES.ubigeo}/GetByPadreID?id=${id}`,
+      getByPadreId: (id: string | number) => `${HOST}/${MODULES.ubigeo}/GetByPadreID?id=${id}`,
     },
     ingreso: {
-      getReporteRentabilidad: (cod: string) => `${HOST}/${PREFIX}/${MODULES.ingreso}/GetReporteRentabilidad?codigoInversor=${cod}`,
-      getReporteRentabilidadDetalle: () => `${HOST}/${PREFIX}/${MODULES.ingreso}/GetReporteRentabilidadDetalle`,
+      getReporteRentabilidad: (cod: string) => `${HOST}/${MODULES.ingreso}/GetReporteRentabilidad?codigoInversor=${cod}`,
+      getReporteRentabilidadDetalle: () => `${HOST}/${MODULES.ingreso}/GetReporteRentabilidadDetalle`,
+    },
+    file: {
+      GetByApplicationCode: (cod: string) => `${HOST}/${MODULES.file}/GetByCodigoSolCredito?id=${cod}`,
     },
   };
 
@@ -70,6 +75,22 @@ export class CreditApplicationService {
     return this.getAnyParamList(PARAMS_IDS.maritalStatus);
   }
 
+  getAllActivityArea(): Observable<Parameter[]> {
+    return this.getAnyParamList(PARAMS_IDS.activityArea);
+  }
+
+  getAllJobs(): Observable<Parameter[]> {
+    return this.getAnyParamList(PARAMS_IDS.job);
+  }
+
+  getAllBank(): Observable<Parameter[]> {
+    return this.getAnyParamList(PARAMS_IDS.bank);
+  }
+
+  getAllTypeAccount(): Observable<Parameter[]> {
+    return this.getAnyParamList(PARAMS_IDS.typeAccount);
+  }
+
   getCodeByMonthName(month: string): number {
     return MONTH.indexOf(month) + 1;
   }
@@ -96,6 +117,28 @@ export class CreditApplicationService {
           data,
           total: response.total,
         };
+      });
+  }
+
+  getCreditApplicationByCode(code: string): Observable<SolicitudCredito> {
+    return this.http
+      .get<SolicitudCredito>(this.methods.creditApplication.getSolicitudCreditoByCode(code))
+      .map<SolicitudCredito, SolicitudCredito>((solicitudCredito) => {
+        const fechaNacimientoArray = (solicitudCredito.FechaNacimiento || '').toString().split('/');
+        const year = +fechaNacimientoArray[2] || 0;
+        const month = +fechaNacimientoArray[1] || 0;
+        const day = +fechaNacimientoArray[0] || 0;
+        solicitudCredito.SeguroDesgravamenId = +solicitudCredito.SeguroDesgravamenId;
+        solicitudCredito.FechaNacimiento = year && month > -1 && day ? new Date(year, month - 1, day) : solicitudCredito.FechaNacimiento;
+        return solicitudCredito;
+      });
+  }
+
+  getFilesByApplicationCode(code: string): Observable<any> {
+    return this.http
+      .get<any>(this.methods.file.GetByApplicationCode(code))
+      .map<any, any>((response) => {
+        return response;
       });
   }
 
@@ -145,9 +188,18 @@ export class CreditApplicationService {
       });
   }
 
-  getUbigeo(parentId: string = '0'): Observable<UbigeoDTO[]> {
+  getSeguroDesgravamen(): Observable<Parameter[]> {
+    return this.getAnyParamList(PARAMS_IDS.seguroDesgravament);
+  }
+
+  getUbigeo(parentId: string | number = '0'): Observable<UbigeoDTO[]> {
     return this.http
       .get<UbigeoDTO[]>(this.methods.ubigeo.getByPadreId(parentId));
+  }
+
+  saveApplication(solicitud: SolicitudCreditoRequest): Observable<any> {
+    return this.http
+      .post(this.methods.creditApplication.saveSolicitud(), solicitud);
   }
 
   private getMonthByCode(code: number): string {
@@ -155,13 +207,13 @@ export class CreditApplicationService {
   }
 }
 
-const HOST = 'http://valentineservices.azurewebsites.net';
-const PREFIX = 'api';
+const HOST = 'http://valentineservices.azurewebsites.net/api';
 const MODULES = {
   params: 'T_Parametro',
   creditApplication: 'T_SolicitudCredito',
   ubigeo: 'T_Ubigeo',
   ingreso: 'T_Ingreso',
+  file: 'T_Archivo',
 };
 
 const PARAMS_IDS = {
@@ -171,6 +223,11 @@ const PARAMS_IDS = {
   gender: '1',
   grade: '4',
   maritalStatus: '16',
+  seguroDesgravament: '37',
+  activityArea: '23',
+  job: '26',
+  typeAccount: '29',
+  bank: '32',
 };
 
 const MONTH: string[] = [
