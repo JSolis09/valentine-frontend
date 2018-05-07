@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CreditApplication, CreditApplicationDTO, Parameter, SearchCreditApplicationDTO } from '../credit-application.model';
+import { BaseResponse, CreditApplication, CreditApplicationDTO,
+         Parameter, SearchCreditApplicationDTO } from '../credit-application.model';
 import { CreditApplicationService } from '../credit-application.service';
 
 @Component({
@@ -9,11 +10,15 @@ import { CreditApplicationService } from '../credit-application.service';
   styleUrls: ['./overview.component.css'],
 })
 export class OverviewComponent implements OnInit {
-  public displayedColumns: string[];
-  public dataSource: CreditApplication[];
-  public statusList: Parameter[];
   public creditDestinationList: Parameter[];
+  public dataSource: CreditApplication[];
+  public displayedColumns: string[];
+  public currentPage: number =  1;
+  public numPages: number[] = [];
+  public pageSize: number = 10;
+  public total: number;
   public solicitud: SearchCreditApplicationDTO = new SearchCreditApplicationDTO();
+  public statusList: Parameter[];
 
   constructor(private router: Router,
               private creditApplicationService: CreditApplicationService) {
@@ -32,7 +37,7 @@ export class OverviewComponent implements OnInit {
       .subscribe((response) => {
         this.creditDestinationList = response;
       });
-    this.search();
+    this.search(this.currentPage);
   }
 
   public goEdit(application: CreditApplication): void {
@@ -40,16 +45,31 @@ export class OverviewComponent implements OnInit {
         .navigate(['credit-application/edit', application.code, 'general']);
   }
 
-  public search(): void {
+  public search(currentPage: number = 1): void {
+    this.currentPage = currentPage;
+    this.solicitud.Paginacion.Page = currentPage;
+    this.solicitud.Paginacion.PageSize = this.pageSize;
     console.log(this.solicitud);
     this.creditApplicationService
       .getCreditApplication(this.solicitud)
-      .subscribe((response: CreditApplication[]) => {
-        this.dataSource = response;
+      .subscribe((response: BaseResponse<CreditApplication>) => {
+        this.dataSource = response.data;
         this.displayedColumns = Object.keys(this.dataSource[0]);
         this.displayedColumns.push('operations');
         console.log(response);
+        this.total = response.total;
+        this.numPages = this.calculateNumPages(this.total, this.pageSize);
+        console.log(this.numPages);
       });
+  }
+
+  private calculateNumPages(total: number, size: number): number[] {
+    const numPages = Math.ceil(total / size);
+    const pages = [];
+    for (let i = 0; i < numPages; i++) {
+      pages.push(i + 1);
+    }
+    return pages;
   }
 
 }
