@@ -1,6 +1,12 @@
 <div class="container">
   <h3>Reporte de rentabilidad anual proyectada</h3>
-  <div class="profitability-">
+  <div class="search-section">
+    <mat-form-field>
+      <input matInput placeholder="Inversor" [(ngModel)]="inversor" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="search()" [disabled]="!inversor || btnDisabled">Buscar</button>
+  </div>
+  <div class="profitability" *ngIf="showReport">
     <mat-table #table [dataSource]="dataSource">
       <!-- period Column -->
       <ng-container matColumnDef="period">
@@ -25,7 +31,7 @@
       <!-- commission Column -->
       <ng-container matColumnDef="commission">
         <mat-header-cell *matHeaderCellDef> Comisión </mat-header-cell>
-        <mat-cell *matCellDef="let item"> S/{{item.commission | currency:' '}} </mat-cell>
+        <mat-cell *matCellDef="let item"> {{ item.commission ? 'S/':'' }}{{item.commission | currency:' '}} </mat-cell>
       </ng-container>
       <!-- repayment Column -->
       <ng-container matColumnDef="repayment">

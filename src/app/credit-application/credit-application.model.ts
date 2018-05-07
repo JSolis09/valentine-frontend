@@ -22,8 +22,8 @@ export class CreditApplication {
   finalTea: number;
 }
 
-export class CreditApplicationResponse {
-  data: CreditApplicationDTO[];
+export class BaseResponse<T> {
+  data: T[];
   total: number;
 }
 
@@ -86,8 +86,41 @@ export class Profitability {
   fee: number;
 }
 
+export class ProfitabilityDTO {
+  Anio: number;
+  Capital: number;
+  Comision: number;
+  Cuotas: number;
+  Interes: number;
+  Mes: number;
+  Moras: number;
+  RetornoNeto: number;
+}
+
+export class DetailProfitabilityRequest {
+  CodigoInversor: string;
+  Anio: number;
+  Mes: number;
+  Paginacion: PaginationDTO = new PaginationDTO();
+}
+
+export class DetailProfitabilityResponse {
+  Capital: number;
+  Comision: number;
+  Cuota: string;
+  CuotaPrestamo: number;
+  EstadoId: number;
+  EstadoNombre: string;
+  Interes: number;
+  Monto: number;
+  Moras: number;
+  RetornoNeto: number;
+  Tasa: number;
+  Vence: Date;
+}
+
 export class DetailProfitability {
-  loanFee: string;
+  loanFee: number;
   capital: number;
   interest: number;
   mora: number;

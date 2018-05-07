@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Profitability } from '../../credit-application.model';
+import { CreditApplicationService } from '../../credit-application.service';
 
 @Component({
   selector: 'app-rentabilidad',
@@ -10,84 +11,35 @@ import { Profitability } from '../../credit-application.model';
 export class RentabilidadComponent implements OnInit {
   public dataSource: Profitability[];
   public displayedColumns: string[];
+  public inversor: string;
+  public showReport: boolean;
+  public btnDisabled: boolean;
 
-  constructor(private router: Router) { }
+  constructor(private creditApplicationService: CreditApplicationService,
+              private router: Router) { }
 
-  ngOnInit() {
-    this.dataSource = DATA;
-    this.displayedColumns = Object.keys(this.dataSource[0]);
-    this.displayedColumns.push('detail');
-  }
+  ngOnInit() {}
 
   goDetail(profitability: Profitability): void {
+    const periodArray = profitability.period.split(' ');
+    const year = periodArray[1];
+    const month = this.creditApplicationService.getCodeByMonthName(periodArray[0]);
     this.router
-      .navigate(['credit-application/report/detail', profitability.period]);
+      .navigate(['credit-application/report/detail', this.inversor, month, year]);
+  }
+
+  search(): void {
+    this.showReport = false;
+    this.btnDisabled = true;
+    this.creditApplicationService
+      .getProfitabilityReport(this.inversor)
+      .subscribe((response) => {
+        this.dataSource = response;
+        this.displayedColumns = Object.keys(this.dataSource[0]);
+        this.displayedColumns.push('detail');
+        this.showReport = true;
+        this.btnDisabled = false;
+      });
   }
 
 }
-
-const DATA: Profitability[] = [
-  {
-    period: 'Marzo 2018',
-    capital: 20000,
-    interest: 38,
-    mora: 0,
-    commission: -2,
-    repayment: 56,
-    fee: 11,
-  },
-  {
-    capital: 20000,
-    period: 'Marzo 2018',
-    interest: 38,
-    mora: 0,
-    commission: -2,
-    repayment: 56,
-    fee: 11,
-  },
-  {
-    capital: 20000,
-    period: 'Marzo 2018',
-    interest: 38,
-    mora: 0,
-    commission: -2,
-    repayment: 56,
-    fee: 11,
-  },
-  {
-    capital: 20000,
-    period: 'Marzo 2018',
-    interest: 38,
-    mora: 0,
-    commission: -2,
-    repayment: 56,
-    fee: 11,
-  },
-  {
-    capital: 20000,
-    period: 'Marzo 2018',
-    interest: 38,
-    mora: 0,
-    commission: -2,
-    repayment: 56,
-    fee: 11,
-  },
-  {
-    capital: 20000,
-    period: 'Marzo 2018',
-    interest: 38,
-    mora: 0,
-    commission: -2,
-    repayment: 56,
-    fee: 11,
-  },
-  {
-    capital: 20000,
-    period: 'Marzo 2018',
-    interest: 38,
-    mora: 0,
-    commission: -2,
-    repayment: 56,
-    fee: 11,
-  },
-];
