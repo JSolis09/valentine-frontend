@@ -6,8 +6,18 @@
     routerLinkActive #rla="routerLinkActive"
     [active]="rla.isActive">
     {{link.label}}
-  </a>
-</nav>
-<h4>Solicitud de crédito N° {{ documentId  }}</h4>
-<router-outlet></router-outlet>
+    </a>
+  </nav>
+  <h4>Solicitud de crédito N° {{ documentId  }}</h4>
+  <div class="tab-section">
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="actions">
+      <mat-list>
+        <mat-list-item> <button mat-raised-button color="primary" (click)="save()">Grabar</button> </mat-list-item>
+        <mat-list-item> <button mat-raised-button>Salir</button> </mat-list-item>
+       </mat-list>
+    </div>
+  </div>
 </div>

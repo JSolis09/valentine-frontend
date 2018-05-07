@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { HttpService } from '../services/http.service';
 import { CreditApplication, CreditApplicationDTO, CreditApplicationResponse,
-         Parameter, ParameterDTO, SearchCreditApplicationDTO, UbigeoDTO } from './credit-application.model';
+         Parameter, ParameterDTO, SearchCreditApplicationDTO, SolicitudCredito, UbigeoDTO } from './credit-application.model';
 
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class CreditApplicationService {
+  public solicitudCredito: SolicitudCredito = new SolicitudCredito();
   private methods = {
     params: {
       getByPadreId: (id: string) => `${HOST}/${PREFIX}/${MODULES.params}/GetByPadreID?id=${id}`,

@@ -1,6 +1,6 @@
 <div class="evaluation">
-  <mat-grid-list class="align-baseline" cols="2" rowHeight='25em'>
-    <mat-grid-tile>
+  <div class="evaluation-section">
+    <div class="column">
       <table class="full-width">
         <tr>
           <td><h4>Datos de la evaluación</h4></td>
@@ -42,13 +42,11 @@
           </td>
         </tr>
         <tr>
-          <td colspan="2">
+          <td>
             <mat-form-field>
               <input matInput placeholder="Puntuación buró">
             </mat-form-field>
           </td>
-        </tr>
-        <tr>
           <td colspan="2">
             <mat-form-field>
               <input matInput placeholder="Perfil asignado">
@@ -63,8 +61,8 @@
           </td>
         </tr>
       </table>
-    </mat-grid-tile>
-    <mat-grid-tile>
+    </div>
+    <div class="column">
       <table class="full-width">
         <tr>
           <td colspan="2"><h4>Contrato de préstamo</h4></td>
@@ -87,28 +85,9 @@
             </button>
           </td>
         </tr>
-        <tr>
-          <td>
-            <h4>Detener proceso</h4>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <mat-slide-toggle>Rechazar solicitud</mat-slide-toggle>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <mat-form-field class="full-width">
-              <mat-select placeholder="Motivo del rechazo">
-                <mat-option value="">DNI</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </td>
-        </tr>
       </table>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+  </div>
   <div class="subasta-section">
     <h3>Datos de la subasta</h3>
     <mat-grid-list class="form-subasta" cols="2" rowHeight='4em'>

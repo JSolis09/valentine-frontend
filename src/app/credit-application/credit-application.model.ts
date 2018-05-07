@@ -75,3 +75,8 @@ export class UbigeoDTO {
   Ubigeo_ID: number;
   Ubigeo_Padre: number;
 }
+
+
+export class SolicitudCredito {
+  nombres: string = '';
+}

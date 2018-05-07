@@ -17,6 +17,8 @@ export class GeneralComponent implements OnInit {
   public departmentList: UbigeoDTO[] = [];
   public provinceList: UbigeoDTO[] = [];
   public districtList: UbigeoDTO[] = [];
+  public solicitud = this.creditApplicationService.solicitudCredito;
+
   constructor(private creditApplicationService: CreditApplicationService) { }
 
   ngOnInit() {

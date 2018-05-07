@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Params, Router } from '@angular/router';
 
+import { CreditApplicationService } from '../credit-application.service';
+
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -16,11 +18,16 @@ export class EditComponent implements OnInit {
   ];
 
   constructor(private activatedRoute: ActivatedRoute,
+              private creditApplicationService: CreditApplicationService,
               private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.documentId = params['id'];
     });
+  }
+
+  save(): void {
+    console.log(this.creditApplicationService.solicitudCredito);
   }
 }
