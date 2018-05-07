@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row py-2">
+        <div class="py-2 text-left">
+            <h2>Reporte de Subastas Procesadas</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ngx-datatable class="material colored-header sm table-hover padding-table" [loadingIndicator]="loadingIndicator" [rows]="rows"
+                    [rowHeight]="35" [headerHeight]="35" [footerHeight]="35" [columns]="columns" [scrollbarV]="verticalScrollbar"
+                    [columnMode]="'force'">
+                </ngx-datatable>
+            <div>
+        </div>
+    </div>
+    <hr class="mb-4">
