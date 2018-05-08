@@ -20,6 +20,8 @@ export class CreditApplicationService {
     creditApplication: {
       searchCreditApplication: () => `${HOST}/${MODULES.creditApplication}/SearchSolicitudCredito`,
       getSolicitudCreditoByCode: (code: string) => `${HOST}/${MODULES.creditApplication}/GetSolicitudCreditoByCodigo?codigo=${code}`,
+      cancelProcess: (codSolicitud: string, motivoCancelacionId: string) =>
+        `${HOST}/${MODULES.creditApplication}/CancelarProceso?codigoSolicitud=${codSolicitud}&motivoCancelacionId=${motivoCancelacionId}`,
       saveSolicitud: () => `${HOST}/${MODULES.creditApplication}/GuardarSolicitud`,
     },
     ubigeo: {
@@ -35,6 +37,11 @@ export class CreditApplicationService {
   };
 
   constructor(private http: HttpService) { }
+
+  cancelProcess(codigoSolicitud: string, motivoCancelacionId: string): Observable<any> {
+    return this.http
+      .put(this.methods.creditApplication.cancelProcess(codigoSolicitud, motivoCancelacionId));
+  }
 
   getAnyParamList(id: string): Observable<Parameter[]> {
     return this.http
@@ -85,6 +92,10 @@ export class CreditApplicationService {
 
   getAllBank(): Observable<Parameter[]> {
     return this.getAnyParamList(PARAMS_IDS.bank);
+  }
+
+  getAllReasons(): Observable<Parameter[]> {
+    return this.getAnyParamList(PARAMS_IDS.reasonCancel);
   }
 
   getAllTypeAccount(): Observable<Parameter[]> {
@@ -228,6 +239,7 @@ const PARAMS_IDS = {
   job: '26',
   typeAccount: '29',
   bank: '32',
+  reasonCancel: '106',
 };
 
 const MONTH: string[] = [

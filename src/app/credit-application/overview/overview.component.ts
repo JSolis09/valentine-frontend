@@ -49,17 +49,14 @@ export class OverviewComponent implements OnInit {
     this.currentPage = currentPage;
     this.solicitud.Paginacion.Page = currentPage;
     this.solicitud.Paginacion.PageSize = this.pageSize;
-    console.log(this.solicitud);
     this.creditApplicationService
       .getCreditApplication(this.solicitud)
       .subscribe((response: BaseResponse<CreditApplication>) => {
         this.dataSource = response.data;
         this.displayedColumns = Object.keys(this.dataSource[0]);
         this.displayedColumns.push('operations');
-        console.log(response);
         this.total = response.total;
         this.numPages = this.calculateNumPages(this.total, this.pageSize);
-        console.log(this.numPages);
       });
   }
 

@@ -38,7 +38,7 @@ export class LoanComponent implements OnInit {
         debt: null,
       });
     });
-    this.displayedColumns = Object.keys(this.dataSource[0]);
+    this.displayedColumns = Object.keys(this.dataSource[0] || {});
   }
 
 }

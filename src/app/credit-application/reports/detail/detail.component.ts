@@ -27,7 +27,6 @@ export class DetailComponent implements OnInit {
       this.detailRequest.CodigoInversor = params['inversorId'];
       this.detailRequest.Anio = params['anio'];
       this.detailRequest.Mes = params['month'];
-      console.log(this.detailRequest);
       this.getProfitabilityDetailReport(this.currentPage);
     });
   }

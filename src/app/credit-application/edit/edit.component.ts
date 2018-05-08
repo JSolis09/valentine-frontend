@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+
 import { ArchivoService } from '../../services';
-import { SolicitudCreditoRequest } from '../credit-application.model';
+import { Parameter, SolicitudCreditoRequest } from '../credit-application.model';
 import { CreditApplicationService } from '../credit-application.service';
 
 import { Observable } from 'rxjs';
@@ -14,17 +17,22 @@ import { Observable } from 'rxjs';
 })
 export class EditComponent implements OnInit {
   public documentId: string;
+  public reason: number = 0;
+  public reasonList: Parameter[];
   public showChildView: boolean;
+  public showCancelButton: boolean;
   public navLinks = [
     { label: 'General', path: 'general' },
     { label: 'Solicitud', path: 'application' },
     { label: 'Evaluación', path: 'evaluation' },
     { label: 'Préstamo', path: 'loan' },
   ];
+  public modalRef: BsModalRef;
 
   constructor(private activatedRoute: ActivatedRoute,
               private archivoService: ArchivoService,
               private creditApplicationService: CreditApplicationService,
+              private modalService: BsModalService,
               private router: Router) { }
 
   ngOnInit() {
@@ -34,10 +42,32 @@ export class EditComponent implements OnInit {
       this.creditApplicationService
         .getCreditApplicationByCode(this.documentId)
         .subscribe((response) => {
-          this.creditApplicationService.solicitudCredito = response;
+          const solicitud = response;
+          this.creditApplicationService.solicitudCredito = solicitud;
           this.showChildView = true;
+          this.showCancelButton = solicitud.EstadoSolicitudId === 55 && (solicitud.EstadoSubastaId === 67 ||  solicitud.EstadoSubastaId === 71) ||
+                                  solicitud.EstadoSolicitudId === 63 && (solicitud.EstadoSubastaId === 69 ||  solicitud.EstadoSubastaId === 72);
+          if (this.showCancelButton) {
+            this.creditApplicationService
+              .getAllReasons()
+              .subscribe((data) => {
+                this.reasonList = data;
+              });
+          }
         });
     });
+  }
+
+  cancelProcess(): void {
+    const solicitud = this.creditApplicationService.solicitudCredito;
+    this.creditApplicationService
+      .cancelProcess(solicitud.CodigoSolCredito, this.reason.toString())
+      .subscribe(() => { });
+    this.modalRef.hide();
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   save(): void {
@@ -58,12 +88,16 @@ export class EditComponent implements OnInit {
     solicitudCredito.ProvinciaSolicitanteId = solicitud.ProvinciaSolicitanteId;
     solicitudCredito.TipoCuentaId = solicitud.TipoCuentaId;
 
-    console.log(solicitudCredito);
     const uploadFileList = this.creditApplicationService.solicitudCredito.ArchivoContrato || [];
     Observable.forkJoin(this.archivoService.uploadFile(uploadFileList),
                         this.creditApplicationService.saveApplication(solicitudCredito))
       .subscribe((response) => {
         this.router.navigate(['credit-application/overview']);
       });
+  }
+
+  goSearch(): void {
+    this.router
+      .navigate(['credit-application/overview']);
   }
 }
