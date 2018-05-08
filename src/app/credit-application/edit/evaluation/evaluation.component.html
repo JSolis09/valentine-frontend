@@ -73,7 +73,7 @@
           <td>
             <mat-icon>insert_drive_file</mat-icon>
           </td>
-          <td>{{ folder.rutaArchivo }}</td>
+          <td><a [href]="folder.rutaArchivo" [download]="folder.nombreArchivo" >{{ folder.nombreArchivo }}</a></td>
           <td>
             <button mat-icon-button>
               <mat-icon>delete</mat-icon>

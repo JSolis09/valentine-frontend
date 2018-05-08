@@ -27,6 +27,11 @@ export class EvaluationComponent implements OnInit {
       .getFilesByApplicationCode(this.solicitud.CodigoSolCredito)
       .subscribe((response) => {
         this.folders = response;
+        this.folders = this.folders.map((folder) => {
+          folder.nombreArchivo = folder.rutaArchivo;
+          folder.rutaArchivo = `${FILE_HOST}${folder.rutaArchivo}`;
+          return folder;
+        });
       });
 
       this.formularios = {
@@ -69,3 +74,5 @@ export class EvaluationComponent implements OnInit {
   }
 
 }
+
+const FILE_HOST = 'https://valentine.blob.core.windows.net/documentos/';
