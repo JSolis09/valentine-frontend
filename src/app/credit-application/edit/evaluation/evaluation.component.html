@@ -75,7 +75,7 @@
           </td>
           <td><a [href]="folder.rutaArchivo" [download]="folder.nombreArchivo" >{{ folder.nombreArchivo }}</a></td>
           <td>
-            <button mat-icon-button>
+            <button mat-icon-button (click)="deleteFile(folder)" [disabled]="!formularios.enabled">
               <mat-icon>delete</mat-icon>
             </button>
           </td>

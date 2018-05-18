@@ -33,6 +33,7 @@ export class CreditApplicationService {
     },
     file: {
       GetByApplicationCode: (cod: string) => `${HOST}/${MODULES.file}/GetByCodigoSolCredito?id=${cod}`,
+      deleteFile: () => `${HOST}/${MODULES.file}/EliminarArchivo`,
     },
   };
 
@@ -41,6 +42,15 @@ export class CreditApplicationService {
   cancelProcess(codigoSolicitud: string, motivoCancelacionId: string): Observable<any> {
     return this.http
       .put(this.methods.creditApplication.cancelProcess(codigoSolicitud, motivoCancelacionId));
+  }
+
+  deleteFile(codFile: string, container: string): Observable<any> {
+    const data = {
+      CodigoArchivo: codFile,
+      Container: container,
+    };
+    return this.http
+      .post(this.methods.file.deleteFile(), data);
   }
 
   getAnyParamList(id: string): Observable<Parameter[]> {
